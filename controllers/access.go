@@ -11,7 +11,7 @@ import (
 type Access struct {
 	Title     string
 	LoginPage *LoginPage
-	Users     *[]models.User
+	Users     *models.Users
 }
 
 // LoginPage page

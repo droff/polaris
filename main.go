@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/droff/polaris/controllers"
@@ -21,9 +22,9 @@ var Access controllers.Access
 
 // Init method
 func init() {
-	var Users []models.User
-	Users = append(Users, models.User{Username: "droff", Password: "12345", HasVideoAccess: true})
-	Users = append(Users, models.User{Username: "test", Password: "test1", HasVideoAccess: false})
+	var Users models.Users
+	Users = append(Users, models.User{ID: 1, Username: "droff", Password: "12345", HasVideoAccess: true})
+	Users = append(Users, models.User{ID: 2, Username: "test", Password: "test1", HasVideoAccess: false})
 
 	Access.Title = "Login Page"
 	Access.Users = &Users
@@ -32,9 +33,13 @@ func init() {
 func main() {
 	fs := libs.Assets{http.Dir("assets/")}
 
-	http.HandleFunc("/", handler)
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(fs)))
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/login", Access.Login)
-	http.ListenAndServe(":4000", nil)
+	mux.HandleFunc("/", handler)
+	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(fs)))
+
+	mux.HandleFunc("/login", Access.Login)
+
+	log.Println("Service started")
+	http.ListenAndServe(":4000", mux)
 }

@@ -4,9 +4,9 @@
 
 {{ define "videoPage"}}
   {{ if eq .HasVideoAccess true }}
-  <video id="video" class="videostream" autoplay="autoplay" preload="metadata">
-    <source src="http://127.0.0.1:8080/webcam.ogg" />
+    <video class="videostream">
+      <source src="http://127.0.0.1:8080/webcam" />
       Your browser doesn't appear to support the HTML5 <code>&lt;video&gt;</code> element.
-  </video>
+    </video>
   {{ end }}
 {{ end }}
