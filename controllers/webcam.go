@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/base64"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os/exec"
 	"strconv"
@@ -22,6 +23,8 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 
 func takeSnap() {
 	//cmd := exec.Command("scrot", "-t 50", "./shot.jpg")
-	cmd := exec.Command("fswebcam", "-r 1280x720", "--jpeg 100", "--no-banner", "/tmp/shot.jpg")
-	cmd.Run()
+	cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
+	cmd.Start()
+	err := cmd.Wait()
+	log.Printf("fswebcam ERROR: %v\n", err)
 }
