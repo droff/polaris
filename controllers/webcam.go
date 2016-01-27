@@ -26,5 +26,7 @@ func takeSnap() {
 	cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
 	cmd.Start()
 	err := cmd.Wait()
-	log.Printf("fswebcam ERROR: %v\n", err)
+	if err != nil {
+		log.Printf("fswebcam ERROR: %v\n", err)
+	}
 }
