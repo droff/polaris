@@ -18,11 +18,12 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "image/jpeg")
 	w.Header().Set("Content-Length", strconv.Itoa(len(imageEncoded)))
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(imageEncoded))
 }
 
 func takeSnap() {
-	//cmd := exec.Command("scrot", "-t 50", "./shot.jpg")
+	//cmd := exec.Command("scrot", "/tmp/shot.jpg")
 	cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
 	cmd.Start()
 	err := cmd.Wait()

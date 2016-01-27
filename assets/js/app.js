@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('#snapshot').hide();
 
-  $(document).on("submit", "form[data-remote=true]", function(e){
+  $(document).on('submit', 'form[data-remote=true]', function(e){
     e.preventDefault();
     $.ajax({
       url: '/auth',
@@ -16,13 +16,20 @@ $(document).ready(function() {
   });
 
   $('#snapshot').click(function() {
+    $('#image').attr('src', '/assets/images/loading.gif');
     $.ajax({
+      method: 'post',
       url: '/getimage',
-      method: 'POST',
-      dataType:"image/jpeg",
-    }).always(function(data) {
-      var rawImage = data.responseText;
-      $("#image").attr("src", "data:image/jpeg;base64," + rawImage);
+      dataType: 'text',
+      complete: function(data) {
+        var rawImage = data.responseText;
+        $('#image').attr('width', '1280');
+        $('#image').attr('height', '720');
+        $('#image').attr('src', 'data:image/jpeg;base64,' + rawImage);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        console.log(xhr, textStatus, errorThrown + 'error');
+      }
     });
   });
 });
