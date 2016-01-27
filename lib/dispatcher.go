@@ -17,6 +17,6 @@ func Dispatcher(inner http.Handler, name string) http.Handler {
 
 		start := time.Now()
 		inner.ServeHTTP(w, r)
-		log.Printf("%s %32s %s", r.Method, r.RequestURI, time.Since(start))
+		log.Printf("[%s] %s %s %s", r.RemoteAddr, r.Method, r.RequestURI, time.Since(start))
 	})
 }
