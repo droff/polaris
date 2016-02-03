@@ -10,18 +10,13 @@
   </head>
   <body>
     <div class="container">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">Polaris</a>
-          </div>
-          <div>
-            {{ template "loginPage" .LoginPage }}
-          </div>
-        </div>
-      </nav>
+      <div class="page-header">
+        <h1 class="logo">Polaris</h1>
+        {{ template "loginPage" .LoginPage }}
+      </div>
 
       <div class="row">
+        <div id="loading"><img src="/assets/images/loading.gif"></div>
         <img id="image" />
       </div>
 

@@ -13,6 +13,13 @@ type DataAuth struct {
 
 var codes models.Codes
 
+// Session contains global session store
+var Session models.Session
+
+func init() {
+	Session.Data = make(map[string]bool)
+}
+
 // Auth POST '/auth'
 func Auth(w http.ResponseWriter, r *http.Request) {
 	codes.Init()
@@ -20,7 +27,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 	data := Params{}
 
 	if codes.Find(params["code"].(string)) == true {
-		data["status"] = "ok"
+		data = Params{"status": "ok", "session_key": Session.Generate()}
 	} else {
 		w.WriteHeader(http.StatusForbidden)
 	}

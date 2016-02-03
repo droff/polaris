@@ -1,34 +1,42 @@
 $(document).ready(function() {
-  $('#snapshot').hide();
+  var session_key = null;
 
-  $(document).on('submit', 'form[data-remote=true]', function(e){
+  $('#snapshot').hide();
+  $('#loading').hide();
+
+  $(document).on('submit', 'form[data-remote=true]', function(e) {
     e.preventDefault();
+
     $.ajax({
       url: '/auth',
       method: 'POST',
       dataType: 'json',
-      data: '{ "code": "' + $('#code').val() + '" }'
-    }).error(function() {
-      console.log('error');
-    }).done(function(data) {
-      $('#snapshot').show();
+      data: '{ "code": "' + $('#code').val() + '" }',
+      error: function() {
+        console.log('error');
+      },
+      complete: function(data) {
+        session_key = JSON.parse(data.responseText).session_key;
+        $('#snapshot').show();
+      }
     });
   });
 
   $('#snapshot').click(function() {
-    $('#image').attr('src', '/assets/images/loading.gif');
+    $('#loading').toggle();
+
     $.ajax({
       method: 'post',
       url: '/getimage',
       dataType: 'text',
-      complete: function(data) {
-        var rawImage = data.responseText;
-        //$('#image').attr('width', '1280');
-        //$('#image').attr('height', '720');
-        $('#image').attr('src', 'data:image/jpeg;base64,' + rawImage);
-      },
+      data: '{ "session_key": "' + session_key + '" }',
       error: function(xhr, textStatus, errorThrown) {
+        $('#loading').toggle();
         console.log(xhr, textStatus, errorThrown + 'error');
+      },
+      complete: function(data) {
+        $('#loading').toggle();
+        $('#image').attr('src', 'data:image/jpeg;base64,' + data.responseText);
       }
     });
   });
