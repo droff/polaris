@@ -4,6 +4,8 @@ $(document).ready(function() {
   $('#snapshot').hide();
   $('#loading').hide();
 
+  $(".fancybox").fancybox();
+
   $(document).on('submit', 'form[data-remote=true]', function(e) {
     e.preventDefault();
 
@@ -36,6 +38,7 @@ $(document).ready(function() {
       },
       complete: function(data) {
         $('#loading').toggle();
+        $('.fancybox').attr('href', 'data:image/jpeg;base64,' + data.responseText);
         $('#image').attr('src', 'data:image/jpeg;base64,' + data.responseText);
       }
     });

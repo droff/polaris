@@ -24,3 +24,8 @@ body {
 .row {
   text-align: center;
 }
+
+.fancybox img {
+  width: 640px;
+  height: 360px;
+}

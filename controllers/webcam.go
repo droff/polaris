@@ -28,8 +28,8 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func takeSnap() {
-	cmd := exec.Command("scrot", "/tmp/shot.jpg")
-	//cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
+	//cmd := exec.Command("scrot", "/tmp/shot.jpg")
+	cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
 	cmd.Start()
 	err := cmd.Wait()
 	if err != nil {

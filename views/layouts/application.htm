@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link href="//v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/jquery.fancybox.css" rel="stylesheet" />
     <link href="/assets/css/app.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="/assets/js/jquery.fancybox.min.js" type="text/javascript"></script>
     <script src="/assets/js/app.js" type="text/javascript"></script>
     <title>{{ .Title }}</title>
   </head>
@@ -17,7 +19,9 @@
 
       <div class="row">
         <div id="loading"><img src="/assets/images/loading.gif"></div>
-        <img id="image" />
+        <a class="fancybox" href="#">
+          <img id="image" />
+        </a>
       </div>
 
     </div>
