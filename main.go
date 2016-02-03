@@ -8,8 +8,6 @@ import (
 	"github.com/droff/polaris/models"
 )
 
-var fs http.FileSystem
-
 func init() {
 	models.InitDB()
 }
