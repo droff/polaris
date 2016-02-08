@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"encoding/base64"
-	"io/ioutil"
-	"log"
+	//"io/ioutil"
+	//"log"
 	"net/http"
-	"os/exec"
+	//"os/exec"
+	"github.com/droff/camsnap"
 	"strconv"
 )
 
@@ -13,9 +14,10 @@ import (
 func GetImage(w http.ResponseWriter, r *http.Request) {
 	params := getParams(r)
 	if Session.Find(params["session_key"].(string)) {
-		takeSnap()
+		//takeSnap()
 
-		rawImage, _ := ioutil.ReadFile("/tmp/shot.jpg")
+		//rawImage, _ := ioutil.ReadFile("/tmp/shot.jpg")
+		rawImage := camsnap.Get("/dev/video0", 1280, 720)
 		imageEncoded := base64.StdEncoding.EncodeToString(rawImage)
 
 		w.Header().Set("Content-Type", "image/jpeg")
@@ -27,12 +29,14 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*
 func takeSnap() {
-	//cmd := exec.Command("scrot", "/tmp/shot.jpg")
-	cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
-	cmd.Start()
-	err := cmd.Wait()
-	if err != nil {
-		log.Printf("snap ERROR: %v\n", err)
-	}
+  cmd := exec.Command("scrot", "/tmp/shot.jpg")
+  cmd := exec.Command("fswebcam", "-r", "1280x720", "--jpeg", "100", "--no-banner", "/tmp/shot.jpg")
+  cmd.Start()
+  err := cmd.Wait()
+  if err != nil {
+    log.Printf("snap ERROR: %v\n", err)
+  }
 }
+*/
