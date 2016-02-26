@@ -1,7 +1,7 @@
 {{ define "loginPage" }}
   <form action="/auth" method="post" class="form-inline" data-remote="true">
     <div class="form-group">
-      <input type="text" id="code" name="code" class="form-control" placeholder="Code" />
+      <input type="password" id="code" name="code" class="form-control" placeholder="Code" />
     </div>
     <input type="submit" value="Auth" class="btn btn-default"/>
     <input id="snapshot" type="button" value="Get" class="btn btn-primary"/>
