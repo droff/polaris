@@ -15,15 +15,17 @@ func init() {
 
 func main() {
 	router := lib.NewRouter()
+	srvTLS := &http.Server{Addr: ":4000", Handler: router}
+
+	go func() {
+		srv := &http.Server{Addr: ":3000"}
+		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "https://0.0.0.0:4000"+r.RequestURI, http.StatusMovedPermanently)
+		})
+		srv.ListenAndServe()
+	}()
 
 	log.Println("Listening...")
-	/*http.ListenAndServe(":4000", router)*/
-
-	srv := &http.Server{
-		Addr:    ":4000",
-		Handler: router,
-	}
-
-	http2.ConfigureServer(srv, &http2.Server{})
-	srv.ListenAndServeTLS("openssl/server.crt", "openssl/server.key")
+	http2.ConfigureServer(srvTLS, &http2.Server{})
+	srvTLS.ListenAndServeTLS("openssl/server.crt", "openssl/server.key")
 }
