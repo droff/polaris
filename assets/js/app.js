@@ -17,8 +17,8 @@ $(document).ready(function() {
       error: function() {
         console.log('error');
       },
-      complete: function(data) {
-        session_key = JSON.parse(data.responseText).session_key;
+      success: function(data, textStatus, xhr) {
+        session_key = JSON.parse(xhr.responseText).session_key;
         $('#snapshot').show();
       }
     });
@@ -36,7 +36,7 @@ $(document).ready(function() {
         $('#loading').toggle();
         console.log(xhr, textStatus, errorThrown + 'error');
       },
-      complete: function(data) {
+      success: function(data, textStatus, xhr) {
         $('#loading').toggle();
         $('.fancybox').attr('href', 'data:image/jpeg;base64,' + data.responseText);
         $('#image').attr('src', 'data:image/jpeg;base64,' + data.responseText);
