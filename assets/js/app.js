@@ -38,8 +38,8 @@ $(document).ready(function() {
       },
       success: function(data, textStatus, xhr) {
         $('#loading').toggle();
-        $('.fancybox').attr('href', 'data:image/jpeg;base64,' + data.responseText);
-        $('#image').attr('src', 'data:image/jpeg;base64,' + data.responseText);
+        $('.fancybox').attr('href', 'data:image/jpeg;base64,' + xhr.responseText);
+        $('#image').attr('src', 'data:image/jpeg;base64,' + xhr.responseText);
       }
     });
   });
