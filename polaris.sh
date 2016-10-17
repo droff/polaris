@@ -1,9 +1,12 @@
 #!/bin/bash
 
+GOPATH=
+
 case $1 in
     start)
         echo "Starting polaris service"
-        nohup $GOPATH/bin/polaris > /dev/null 2>&1 & echo $! > /tmp/ploaris.pid
+        cd $GOPATH/src/github.com/droff/polaris
+        nohup ./polaris > /dev/null 2>&1 & echo $! > /tmp/ploaris.pid
         ;;
     stop)
         echo "Stopping polaris service"
